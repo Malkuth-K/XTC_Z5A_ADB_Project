@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' http://127.0.0.1:* data:; media-src 'self' http://127.0.0.1:*; style-src 'self' 'unsafe-inline'; script-src 'self'">
+  <title>雷霆Link</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 顶栏 -->
+    <header id="topbar">
+      <div class="logo">
+        <div class="logo-icon">⚡</div>
+        <div class="logo-text">
+          <div class="logo-name">雷霆Link</div>
+          <div class="logo-sub">三端互传 · 雷霆直达</div>
+        </div>
+      </div>
+      <div class="top-right">
+        <span id="self-info" class="self-info"></span>
+        <button id="btn-pc-settings" class="btn btn-yellow small">设置</button>
+      </div>
+    </header>
+
+    <div id="main">
+      <!-- 左侧垂直导航 -->
+      <nav id="sidebar">
+        <div id="nav-settings" class="nav-item" data-page="settings">⚙ 设置</div>
+        <div id="nav-ltp" class="nav-item" data-page="media-lttp">🖼 雷霆图片</div>
+        <div id="nav-lts" class="nav-item" data-page="media-ltsp">🎬 雷霆视频</div>
+        <div id="nav-ercyv" class="nav-item" data-page="media-ERCYSP">🎬 ERCY视频</div>
+        <div id="nav-ercyp" class="nav-item" data-page="media-ERCYtp">🖼 ERCY图片</div>
+        <div id="nav-transfer" class="nav-item" data-page="transfer">⇄ 文件传输</div>
+      </nav>
+
+      <!-- 右侧内容区 -->
+      <main id="content">
+        <!-- 设置页 -->
+        <section id="page-settings" class="page hidden">
+          <h2 class="page-title">设置</h2>
+          <div class="card">
+            <label>设备昵称</label>
+            <input id="set-name" type="text" placeholder="雷霆电脑-xxx">
+            <label>服务端口</label>
+            <input id="set-port" type="number" placeholder="9786">
+            <label>视频快进/快退步长（秒）</label>
+            <input id="set-seek" type="number" placeholder="30">
+            <div class="btn-row">
+              <button id="btn-save-settings" class="btn btn-yellow">保存</button>
+            </div>
+            <div id="settings-info" class="info-text"></div>
+          </div>
+        </section>
+
+        <!-- 媒体页（通用，dir 动态） -->
+        <section id="page-media" class="page hidden">
+          <div class="page-head">
+            <h2 id="media-title" class="page-title">雷霆图片</h2>
+            <div class="btn-row">
+              <button id="btn-add-file" class="btn btn-yellow">＋ 添加文件</button>
+              <button id="btn-refresh" class="btn btn-purple">⟳ 刷新</button>
+              <button id="btn-open-dir" class="btn btn-purple">📂 打开目录</button>
+            </div>
+          </div>
+          <input id="file-input" type="file" multiple hidden>
+          <div id="media-grid" class="grid"></div>
+          <div id="media-empty" class="empty-tip">目录为空，点击"添加文件"增加</div>
+        </section>
+
+        <!-- 文件传输页 -->
+        <section id="page-transfer" class="page hidden">
+          <h2 class="page-title">文件传输</h2>
+          <div id="peer-list" class="peer-list"></div>
+          <div id="peer-empty" class="empty-tip">同一局域网未发现其他设备，请确认对端已启动雷霆Link</div>
+
+          <div id="peer-panel" class="hidden">
+            <div class="page-head">
+              <h3 id="peer-title" class="page-title">对端文件</h3>
+              <div class="btn-row">
+                <button id="btn-upload-file" class="btn btn-yellow">⇧ 上传本机文件</button>
+                <button id="btn-peer-refresh" class="btn btn-purple">⟳ 刷新</button>
+                <button id="btn-close-peer" class="btn btn-purple">关闭</button>
+              </div>
+            </div>
+            <input id="upload-input" type="file" multiple hidden>
+            <div id="peer-dirs" class="dir-tabs"></div>
+            <div id="peer-files" class="peer-files"></div>
+            <div id="transfer-log" class="info-text"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- 图片查看器 -->
+  <div id="img-modal" class="modal hidden">
+    <div class="modal-toolbar">
+      <button class="btn btn-yellow small" id="img-zoom-out">− 缩小</button>
+      <button class="btn btn-purple small" id="img-fit">适应</button>
+      <button class="btn btn-yellow small" id="img-zoom-in">＋ 放大</button>
+      <button class="btn btn-purple small" id="img-close">✕ 关闭</button>
+    </div>
+    <div id="img-stage" class="modal-stage"><img id="img-view" alt=""></div>
+  </div>
+
+  <!-- 视频播放器 -->
+  <div id="vid-modal" class="modal hidden">
+    <div class="modal-toolbar">
+      <button class="btn btn-purple small" id="vid-zoom">缩放</button>
+      <button class="btn btn-yellow small" id="vid-rewind">◀◀ −步</button>
+      <button class="btn btn-yellow small" id="vid-play">▶ 播放</button>
+      <button class="btn btn-yellow small" id="vid-forward">+步 ▶▶</button>
+      <button class="btn btn-purple small" id="vid-close">✕ 关闭</button>
+    </div>
+    <div id="vid-stage" class="modal-stage">
+      <video id="vid-view" controls playsinline></video>
+      <div id="vid-progress-row">
+        <span id="vid-time-cur">00:00</span>
+        <input id="vid-seek" type="range" min="0" max="100" value="0">
+        <span id="vid-time-total">00:00</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

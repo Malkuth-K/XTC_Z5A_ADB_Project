@@ -1,0 +1,14 @@
+{
+  "name": "thunderlink-pc",
+  "version": "1.0.0",
+  "description": "雷霆Link PC 端 - 三端互传文件",
+  "main": "main.js",
+  "author": "Malkuth.K",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^31.7.7"
+  }
+}
