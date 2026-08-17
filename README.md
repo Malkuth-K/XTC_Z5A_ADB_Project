@@ -1,2 +1,2 @@
 # XTC_Z5A_ADB_Project
-这个项目是关于小天才电话手表Z5A的相关项目，他们可以通过ADB调试安装到手表上，项目包含传屏，B站，文件传输，手表上的家长端移植和其他，但注意，项目存在部分BUG，项目中除传屏，文件传输，手表上的家长端移植的部分存在致命缺陷，在使用时请注意，作者对项目的质量不做保证。
+这个项目是关于小天才电话手表Z5A的相关项目，它们可以通过ADB调试安装到手表上，项目包含传屏，B站，文件传输，手表上的家长端移植和其他，但注意，项目存在部分BUG，项目中除传屏，文件传输，手表上的家长端移植的部分存在致命缺陷，在使用时请注意，作者对项目的质量不做保证。This project is related to the Xiaotiancai Z5A smartwatch. They can install it on the watch via ADB debugging. The project includes screen casting, Bilibili, file transfer, porting the parent app to the watch, and other features. But note, the project has some bugs. Except for screen casting, file transfer, and the porting of the parent app to the watch, other parts have serious flaws, so please be careful when using it. The author does not guarantee the quality of the project.
